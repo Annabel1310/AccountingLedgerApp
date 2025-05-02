@@ -135,7 +135,7 @@ public class Main {
     public static ArrayList<Transaction> transactions = new ArrayList<>();
 
     // this method reads from the file and splits it, trims and then adds it to the ArrayList called transactions
-    public static void getAllTransactions() {
+    public static ArrayList<Transaction> getAllTransactions() {
 
 
         try (Scanner reader = new Scanner(new File("transactions.csv"))) {
@@ -154,6 +154,7 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return transactions;
     }
 
     public static void showAllTransactions() {
@@ -197,13 +198,22 @@ public class Main {
                     3) Year To Date
                     4) Previous Year
                     5) Search by Vendor
+                    6) Go Back To Ledger Screen
                     """);
             System.out.print("Enter your choice: ");
             String Reportsection = scanner.nextLine().toUpperCase();
 
             switch (Reportsection) {
                 case "1":
+                    LocalDate today = LocalDate.now();
+                    String yearMonth = today.toString().substring(0, 7);
+                    ArrayList<Transaction> transactions = getAllTransactions();
                     System.out.println("Showing Month To Date!");
+                    for (Transaction t : transactions){
+                        if (t.getDate().startsWith(yearMonth)){
+                            System.out.println(t);
+                        }
+                    }
                     //TODO: Add Month to Date logic
                     break;
                 case "2":

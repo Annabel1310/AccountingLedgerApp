@@ -20,4 +20,9 @@ public class Transaction{
     public String getDescription(){ return Description; }
     public String getVendor(){ return Vendor; }
     public double getAmount(){ return Amount; }
+    //toString Method
+    @Override
+    public String toString() {
+        return Date + '|' + Time + '|' + Description + '|' + Vendor + '|' + Amount;
+    }
 }
