@@ -8,7 +8,7 @@ public class Main {
 
     public static void homeScreen() {
         System.out.println("""
-                Welcome to the home screen
+                WELCOME TO HOME SCREEN
                 Enter an option to proceed:
                 D - Add Deposit
                 P - Make Payment
@@ -94,11 +94,11 @@ public class Main {
         boolean inLedgerMenu = true;
         while (inLedgerMenu) {
             System.out.println("""
-                     ledger menu:
-                    A - show all entries
-                     D - show Deposits only
-                    P - show Payments only
-                     R - show Reports
+                    Ledger Menu:
+                    A - Show All Entries
+                    D - Show Deposits only
+                    P - Show Payments only
+                    R - Show Reports
                     H - Home
                     """);
             System.out.print("Enter your choice: ");
@@ -214,28 +214,56 @@ public class Main {
                             System.out.println(t);
                         }
                     }
-                    //TODO: Add Month to Date logic
                     break;
                 case "2":
+                    today = LocalDate.now();
+                    LocalDate prevMonth = today.minusMonths(1);
+                    String prevYearMonth = prevMonth.toString().substring(0, 7);
+                    transactions = getAllTransactions();
                     System.out.println("Showing Previous Month!");
-                    //TODO: Add previous Month logic
+                    for (Transaction t : transactions) {
+                        if (t.getDate().startsWith(prevYearMonth)) {
+                            System.out.println(t);
+                        }
+                    }
                     break;
                 case "3":
+                    today = LocalDate.now();
+                    String currentYear = today.toString().substring(0, 4);
+                    transactions = getAllTransactions();
                     System.out.println(" Showing Year To Date!");
-                    //TODO: Add year to date logic
+                    for (Transaction t : transactions) {
+                        if (t.getDate().startsWith(currentYear)) {
+                            System.out.println(t);
+                        }
+                    }
                     break;
                 case "4":
+                    today = LocalDate.now();
+                    int previousYear = Integer.parseInt(today.toString().substring(0, 4)) - 1;
+                    String prevYearStr = String.valueOf(previousYear);
+                    transactions = getAllTransactions();
                     System.out.println("Showing Previous Year!");
-                    //TODO: Add previous year logic
+                    for (Transaction t : transactions) {
+                        if (t.getDate().startsWith(prevYearStr)) {
+                            System.out.println(t);
+                        }
+                    }
                     break;
                 case "5":
                     System.out.println("Search by Vendor!");
                     String vendor = scanner.nextLine();
-                    System.out.println("searching for vendor");
-                    //TODO:  Add search by Vendor logic
+                    transactions = getAllTransactions();
+                    System.out.println("Entries for  the vendor: "+ vendor);
+                    for (Transaction t : transactions) {
+                        if (t.getVendor().equalsIgnoreCase(vendor)) {
+                            System.out.println(t);
+                        }
+                    }
                 case "0":
                     running = false;
 
+                scanner.nextLine();
                 default:
                     System.out.println("Invalid Option. Try Again");
 
